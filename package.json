@@ -1,9 +1,9 @@
 {
-  "name": "use-debounced-callback",
+  "name": "use-throttled-callback",
   "version": "1.0.1",
-  "description": "The debounced version of useCallback.",
+  "description": "The throttled version of useCallback.",
   "main": "index.js",
-  "repository": "https://github.com/DrugoLebowski/use-debounced-callback",
+  "repository": "https://github.com/DrugoLebowski/use-throttled-callback",
   "author": "Valerio Belli <belli.valerio@gmail.com>",
   "license": "MIT",
   "dependencies": {
