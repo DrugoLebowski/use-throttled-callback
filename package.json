@@ -6,43 +6,37 @@
   "repository": "https://github.com/DrugoLebowski/use-throttled-callback",
   "author": "Valerio Belli <belli.valerio@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "build": "yarn clean && yarn copy-files && tsc",
+    "clean": "rm -rf lib",
+    "copy-files": "mkdir lib && cp .gitignore package.json Readme.md lib",
+    "npm-publish": "yarn build && cd lib && npm publish && cd ..",
+    "test": "jest --env=jsdom"
+  },
   "dependencies": {
     "@types/jest": "^24.0.18",
-    "@types/react": "^16.9.2",
-    "@types/react-dom": "^16.9.0",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "@types/react": "^16.9.36",
+    "@types/react-dom": "^16.9.8"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^3.2.0",
+    "@typescript-eslint/parser": "^3.2.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-react-hooks": "^2.5.1",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint": "^6.8.0",
     "jest": "^24.9.0",
+    "prettier": "^2.0.5",
     "ts-jest": "^24.0.2",
-    "tslint": "^5.19.0",
-    "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.5.3"
+    "typescript": "^3.9.5"
   },
-  "scripts": {
-    "build": "yarn clean && yarn copy-files && ./node_modules/.bin/tsc --build ./tsconfig.json",
-    "clean": "rm -rf lib",
-    "copy-files": "mkdir lib && cp .gitignore .prettierrc package.json Readme.md tslint.json lib",
-    "npm-publish": "yarn build && cd lib && npm publish && cd ..",
-    "test": "./node_modules/.bin/jest --env=jsdom"
-  },
-  "jest": {
-    "roots": [
-      "<rootDir>/src"
-    ],
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "moduleFileExtensions": [
-      "js",
-      "jsx",
-      "json",
-      "ts",
-      "tsx"
-    ],
-    "testPathIgnorePatterns": [
-      "__mocks__"
-    ]
+  "peerDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }
