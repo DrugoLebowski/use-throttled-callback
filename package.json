@@ -7,10 +7,12 @@
   "author": "Valerio Belli <belli.valerio@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "yarn clean && yarn copy-files && tsc",
-    "clean": "rm -rf lib",
-    "copy-files": "mkdir lib && cp .gitignore package.json Readme.md lib",
-    "npm-publish": "yarn build && cd lib && npm publish && cd ..",
+    "build": "yarn build:clean && yarn build:copy-project-files && yarn build:compile && yarn build:typings",
+    "build:clean": "rm -rf dist",
+    "build:compile": "yarn tsc",
+    "build:copy-project-files": "mkdir dist && cp .gitignore package.json Readme.md dist",
+    "build:typings": "tsc --project tsconfig.typings.json",
+    "npm-publish": "yarn build && cd dist && npm publish && cd ..",
     "test": "jest --env=jsdom"
   },
   "dependencies": {
