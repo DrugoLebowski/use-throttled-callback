@@ -1,8 +1,9 @@
 {
   "name": "use-throttled-callback",
-  "version": "1.0.1",
-  "description": "The throttled version of useCallback.",
-  "main": "index.js",
+  "version": "2.0.0",
+  "description": "The throttled version of React's useCallback.",
+  "main": "lib/index.js",
+  "typings": "typings/index.d.ts",
   "repository": "https://github.com/DrugoLebowski/use-throttled-callback",
   "author": "Valerio Belli <belli.valerio@gmail.com>",
   "license": "MIT",
