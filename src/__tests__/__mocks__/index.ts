@@ -1,1 +1,0 @@
-export { default as MockComponent } from "./mock-component";
