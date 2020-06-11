@@ -1,47 +1,48 @@
-// Vendor
-import { useCallback, useRef, useEffect } from "react";
+import { useCallback, useRef } from 'react'
 
 /**
- * Throttle the `callback` execution until the `milliseconds` pass.
+ * Permits to generate a throttled version of the `callback` passed as parameter.
  *
- * @param callback {function(e: any) => any} The callback to throttle
- * @param milliseconds {number} The milliseconds of throttling
- * @returns The throttled callback
+ * @param callback The callback to throttle
+ * @param wait The milliseconds of throttling
+ * @param dependencies Dependencies of the throttled callback
+ * @returns The throttled callback and `flush` function with which can be resetted the inner timer.
  */
-function useThrottledCallback(
-  callback: (e: any) => any,
-  milliseconds: number
-): (e: any) => any {
-  const timeoutId = useRef<number>(0);
-  const callbackAlreadyCalled = useRef<boolean>(false);
-  const memoizedCallback = useCallback(
-    (e: any) => {
-      callbackAlreadyCalled.current = true;
-      callback(e);
-    },
-    [callback]
-  );
+export const useThrottledCallback = <
+  P extends any[],
+  R extends unknown | Promise<unknown>,
+  D extends unknown
+>(
+  callback: (...args: P) => R | Promise<R>, // useCallback
+  wait: number,
+  dependencies: D[],
+) => {
+  const lastTimeCalled = useRef<number>(0)
 
-  const throttledCallback = useCallback(
-    (e: any) => {
-      if (!callbackAlreadyCalled.current) {
-        memoizedCallback(e);
+  const canBeCalled = useCallback(() => {
+    return Date.now() - lastTimeCalled.current > wait
+  }, [wait])
 
-        timeoutId.current = window.setTimeout(() => {
-          callbackAlreadyCalled.current = false;
-        }, milliseconds);
+  const memoizedCallback = useCallback((...args: P) => {
+    lastTimeCalled.current = Date.now()
+
+    return callback(...args)
+  }, dependencies)
+
+  const result = useCallback(
+    (...args: P) => {
+      if (!canBeCalled()) {
+        return null
       }
+
+      return memoizedCallback(...args)
     },
-    [milliseconds]
-  );
+    [canBeCalled, memoizedCallback, wait],
+  )
 
-  useEffect(() => {
-    return () => {
-      clearTimeout(timeoutId.current);
-    };
-  });
+  const flush = useCallback(() => {
+    lastTimeCalled.current = 0
+  }, [])
 
-  return throttledCallback;
+  return { flush, result }
 }
-
-export default useThrottledCallback;
