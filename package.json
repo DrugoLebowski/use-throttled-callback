@@ -14,7 +14,8 @@
     "build:copy-project-files": "mkdir dist && cp .gitignore package.json Readme.md dist",
     "build:typings": "tsc --project tsconfig.typings.json",
     "npm-publish": "yarn build && cd dist && npm publish && cd ..",
-    "test": "jest --env=jsdom"
+    "test": "jest --env=jsdom",
+    "typecheck": "yarn tsc --project tsconfig.typecheck.json"
   },
   "dependencies": {
     "@types/jest": "^24.0.18",
