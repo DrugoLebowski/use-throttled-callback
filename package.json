@@ -1,48 +1,58 @@
 {
   "name": "use-throttled-callback",
-  "version": "1.0.1",
-  "description": "The throttled version of useCallback.",
-  "main": "index.js",
+  "version": "2.0.0",
+  "description": "The throttled version of React's useCallback.",
+  "main": "lib/index.js",
+  "typings": "typings/index.d.ts",
   "repository": "https://github.com/DrugoLebowski/use-throttled-callback",
   "author": "Valerio Belli <belli.valerio@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "build": "yarn build:clean && yarn build:copy-project-files && yarn build:compile && yarn build:typings",
+    "build:clean": "rm -rf dist",
+    "build:compile": "yarn tsc",
+    "build:copy-project-files": "mkdir dist && cp .gitignore package.json Readme.md dist",
+    "build:typings": "tsc --project tsconfig.typings.json",
+    "npm-publish": "yarn build && cd dist && npm publish && cd ..",
+    "test": "jest --env=jsdom",
+    "typecheck": "yarn tsc --project tsconfig.typecheck.json"
+  },
   "dependencies": {
     "@types/jest": "^24.0.18",
-    "@types/react": "^16.9.2",
-    "@types/react-dom": "^16.9.0",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "@types/react": "^16.9.36",
+    "@types/react-dom": "^16.9.8"
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@testing-library/react-hooks": "^3.3.0",
+    "@typescript-eslint/eslint-plugin": "^3.2.0",
+    "@typescript-eslint/parser": "^3.2.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-react-hooks": "^2.5.1",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint": "^6.8.0",
+    "husky": "^4.2.5",
     "jest": "^24.9.0",
+    "prettier": "^2.0.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-test-renderer": "^16.13.1",
     "ts-jest": "^24.0.2",
-    "tslint": "^5.19.0",
-    "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.5.3"
+    "typescript": "^3.9.5"
   },
-  "scripts": {
-    "build": "yarn clean && yarn copy-files && ./node_modules/.bin/tsc --build ./tsconfig.json",
-    "clean": "rm -rf lib",
-    "copy-files": "mkdir lib && cp .gitignore .prettierrc package.json Readme.md tslint.json lib",
-    "npm-publish": "yarn build && cd lib && npm publish && cd ..",
-    "test": "./node_modules/.bin/jest --env=jsdom"
+  "peerDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
-  "jest": {
-    "roots": [
-      "<rootDir>/src"
-    ],
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "moduleFileExtensions": [
-      "js",
-      "jsx",
-      "json",
-      "ts",
-      "tsx"
-    ],
-    "testPathIgnorePatterns": [
-      "__mocks__"
-    ]
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   }
 }

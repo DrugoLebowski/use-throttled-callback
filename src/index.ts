@@ -1,1 +1,1 @@
-export { default as useThrottledCallback } from "./use-throttled-callback";
+export { useThrottledCallback } from './use-throttled-callback'

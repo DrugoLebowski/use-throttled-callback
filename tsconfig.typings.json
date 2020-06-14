@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "./dist/typings",
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/__tests__", "**/__mocks__"]
+}

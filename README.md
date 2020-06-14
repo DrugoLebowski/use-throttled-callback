@@ -1,11 +1,21 @@
 useThrottledCallback
 ====================
 
+Prerequisites
+-------------
+NPM
+
+`npm install react react-dom`
+
+Yarn
+
+`yarn add react react-dom`
+
 Install
 -------
 With npm
 
-`npm i use-throttled-callback`
+`npm install use-throttled-callback`
 
 With Yarn
 
@@ -14,21 +24,29 @@ With Yarn
 Usage
 -----
 
-```javascript
-import React, { useState } from "react";
-import { useThrottledCallback } from "use-throttled-callback";
+```typescript
+import React, { ChangeEvent, useState } from 'react'
+import { useThrottledCallback } from 'use-throttled-callback'
 
 const FuncComp = () => {
-  const [ text, setText, ] = useState("");
-  const throttledCallback = useThrottledCallback((e) => {
-    setText(e.target.value);
-  }, 250);
+  const [text, setText] = useState('')
+
+  const { flush, result: handleThrottledChange } = useThrottledCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setText(e.target.value)
+    },
+    10000,
+    [],
+  )
 
   return (
     <div>
-      <input onChange={throttledCallback} />
+      <button onClick={flush}>Click me to reset the callback throttling!</button>
+
+      <input onChange={handleThrottledChange} />
+
       {text}
     </div>
-  );
+  )
 }
 ```
